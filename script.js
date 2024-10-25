@@ -10,7 +10,37 @@ for (let i = 0; i < collisions.length; i += 70) { // 70 is the width of the map.
     collisionsMap.push(collisions.slice(i, i + 70));
 }
 
+class Boundary {
+    static width = 48
+    static height = 48
+    constructor({position}) {
+        this.position = position;
+        this.width = 48;
+        this.height = 48;
+    }
 
+    draw() {
+        c.fillStyle = 'red';
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+}
+
+const boundaries = []
+
+collisionsMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        boundaries.push(
+            new Boundary({
+                position: {
+                    x: j * Boundary.width, 
+                    y: i * Boundary.height
+                }    
+            })
+        )
+    })
+})
+
+console.log(boundaries);
 
 const image = new Image();
 image.src = './img/Pellet Town.png';
