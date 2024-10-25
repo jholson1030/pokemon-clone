@@ -1,9 +1,16 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+console.log(collisions);
 
 canvas.width = 1024;
 canvas.height = 576;
-c.fillRect(0, 0, canvas.width, canvas.height);
+
+const collisionsMap = []
+for (let i = 0; i < collisions.length; i += 70) { // 70 is the width of the map. 70 tiles wide
+    collisionsMap.push(collisions.slice(i, i + 70));
+}
+
+
 
 const image = new Image();
 image.src = './img/Pellet Town.png';
