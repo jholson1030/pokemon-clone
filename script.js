@@ -27,20 +27,25 @@ class Boundary {
 
 const boundaries = []
 
+const offset = {
+    x: -760,
+    y: -585
+}
+
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
+        if (symbol === 1025)
         boundaries.push(
             new Boundary({
                 position: {
-                    x: j * Boundary.width, 
-                    y: i * Boundary.height
+                    x: j * Boundary.width + offset.x, 
+                    y: i * Boundary.height + offset.y
                 }    
             })
         )
     })
 })
 
-console.log(boundaries);
 
 const image = new Image();
 image.src = './img/Pellet Town.png';
@@ -59,10 +64,11 @@ class Sprite {
     }
 }
 
+
 const background = new Sprite({
     position: {
-        x: -760,
-        y: -585
+        x: offset.x,
+        y: offset.y
     }, 
     image: image
 });
@@ -82,9 +88,21 @@ const keys = {
     }
 }
 
+const testBoundary = new Boundary({
+    position: {
+        x: 400,
+        y: 400
+    }
+})
+
+const movables = [background, testBoundary];
 function animate() {
     window.requestAnimationFrame(animate);
     background.draw();
+    //boundaries.forEach(Boundary => {
+    //    Boundary.draw();
+    //})
+    testBoundary.draw();
     c.drawImage(
         playerImage,
         0,
@@ -97,10 +115,26 @@ function animate() {
         playerImage.height
     );
 
-    if (keys.w.pressed && lastKey === 'w') background.position.y += 3;
-    else if (keys.a.pressed && lastKey === 'a') background.position.x += 3;
-    else if (keys.s.pressed && lastKey === 's') background.position.y -= 3;
-    else if (keys.d.pressed && lastKey === 'd') background.position.x -= 3;
+    if (keys.w.pressed && lastKey === 'w') {
+        movables.forEach((movable) => {
+            movable.position.y += 3;
+        });
+    }
+    else if (keys.a.pressed && lastKey === 'a') {
+        movables.forEach((movable) => {
+            movable.position.x += 3;
+    });
+}
+    else if (keys.s.pressed && lastKey === 's') {
+        movables.forEach((movable) => {
+            movable.position.y -= 3;
+    });
+}
+    else if (keys.d.pressed && lastKey === 'd') {
+        movables.forEach((movable) => {
+            movable.position.x -= 3;
+    });
+}
 
 }
 
