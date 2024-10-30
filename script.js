@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-console.log(collisions);
+console.log(battleZonesData);
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -10,7 +10,12 @@ for (let i = 0; i < collisions.length; i += 70) { // 70 is the width of the map.
     collisionsMap.push(collisions.slice(i, i + 70));
 }
 
+const battleZonesMap = []
+for (let i = 0; i < battleZonesData.length; i += 70) { // 70 is the width of the map. 70 tiles wide
+    battleZonesMap.push(battleZonesData.slice(i, i + 70));
+}
 
+console.log(battleZonesMap);
 
 const boundaries = []
 
@@ -33,6 +38,23 @@ collisionsMap.forEach((row, i) => {
     })
 })
 
+const battleZones = [];
+
+battleZonesMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 1025)
+        battleZones.push(
+            new Boundary({
+                position: {
+                    x: j * Boundary.width + offset.x, 
+                    y: i * Boundary.height + offset.y
+                }    
+            })
+        )
+    })
+})
+
+console.log(battleZones);
 
 const image = new Image();
 image.src = './img/Pellet Town.png';
@@ -104,7 +126,7 @@ const keys = {
 }
 
 
-const movables = [background, ...boundaries, foreground];
+const movables = [background, ...boundaries, foreground, ...battleZones];
 
 function rectangularCollision({rectangle1, rectangle2}) {
     return (rectangle1.position.x + rectangle1.width >= rectangle2.position.x && 
@@ -118,6 +140,9 @@ function animate() {
     boundaries.forEach(Boundary => {
         Boundary.draw();
         
+    })
+    battleZones.forEach(battleZone => {
+        battleZone.draw();
     })
     player.draw();
     foreground.draw();
@@ -141,6 +166,22 @@ function animate() {
                 break
             }
         }
+
+        for(let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            if (rectangularCollision({
+                rectangle1: player,
+                rectangle2: {...boundary, position: {
+                    x: boundary.position.x,
+                    y: boundary.position.y + 3
+                }}
+            })) {
+                console.log('colliding');
+                moving = false;
+                break
+            }
+        }
+
         if (moving)
         movables.forEach((movable) => {
             movable.position.y += 3;
