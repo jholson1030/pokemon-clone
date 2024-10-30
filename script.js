@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-console.log(battleZonesData);
+
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -15,7 +15,7 @@ for (let i = 0; i < battleZonesData.length; i += 70) { // 70 is the width of the
     battleZonesMap.push(battleZonesData.slice(i, i + 70));
 }
 
-console.log(battleZonesMap);
+
 
 const boundaries = []
 
@@ -54,7 +54,6 @@ battleZonesMap.forEach((row, i) => {
     })
 })
 
-console.log(battleZones);
 
 const image = new Image();
 image.src = './img/Pellet Town.png';
@@ -146,6 +145,19 @@ function animate() {
     })
     player.draw();
     foreground.draw();
+
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        for(let i = 0; i < battleZones.length; i++) {
+            const battleZone = battleZones[i];
+            if (rectangularCollision({
+                rectangle1: player,
+                rectangle2: battleZone
+            })) {
+                console.log('battle zone collision');
+                break
+            }
+        }
+    }
    
     let moving = true;
     player.moving = false;
@@ -161,26 +173,12 @@ function animate() {
                     y: boundary.position.y + 3
                 }}
             })) {
-                console.log('colliding');
                 moving = false;
                 break
             }
         }
 
-        for(let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i];
-            if (rectangularCollision({
-                rectangle1: player,
-                rectangle2: {...boundary, position: {
-                    x: boundary.position.x,
-                    y: boundary.position.y + 3
-                }}
-            })) {
-                console.log('colliding');
-                moving = false;
-                break
-            }
-        }
+        
 
         if (moving)
         movables.forEach((movable) => {
@@ -199,7 +197,6 @@ function animate() {
                     y: boundary.position.y 
                 }}
             })) {
-                console.log('colliding');
                 moving = false;
                 break
             }
@@ -221,7 +218,6 @@ function animate() {
                     y: boundary.position.y  - 3
                 }}
             })) {
-                console.log('colliding');
                 moving = false;
                 break
             }
@@ -243,7 +239,6 @@ function animate() {
                     y: boundary.position.y 
                 }}
             })) {
-                console.log('colliding');
                 moving = false;
                 break
             }
@@ -281,7 +276,7 @@ window.addEventListener('keydown', (e) => {
             lastKey = 'd';
         break;
     }
-    console.log(keys);
+
 });
 
 window.addEventListener('keyup', (e) => {
@@ -302,5 +297,4 @@ window.addEventListener('keyup', (e) => {
             keys.d.pressed = false;
         break;
     }
-    console.log(keys);
 });
