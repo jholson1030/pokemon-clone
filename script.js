@@ -298,8 +298,19 @@ function animate() {
 
 animate();
 
+const battleBackgroundImage = new Image();
+
+battleBackgroundImage.src = './img/battleBackground.png';
+const battleBackground = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    image: battleBackgroundImage
+})
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
+    battleBackground.draw();
     console.log('animating a battle sequence');
 }
 
