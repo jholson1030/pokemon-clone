@@ -333,7 +333,7 @@ embyImage.src = './img/embySprite.png';
 const emby = new Sprite({
     position: {
         x: 275,
-        y: 340
+        y: 330
     },
     image: embyImage,
     frames: {
