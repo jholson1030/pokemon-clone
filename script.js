@@ -84,7 +84,8 @@ const player = new Sprite({
     },
     image: playerDownImage,
     frames: {
-        max: 4
+        max: 4,
+        hold: 10
     },
     sprites: {
         up: playerUpImage,
@@ -321,16 +322,36 @@ const draggle= new Sprite({
     },
     image: draggleImage,
     frames: {
-        max: 4
+        max: 4,
+        hold: 30
     },
     animate: true
 });
+
+const embyImage = new Image();
+embyImage.src = './img/embySprite.png';
+const emby = new Sprite({
+    position: {
+        x: 275,
+        y: 340
+    },
+    image: embyImage,
+    frames: {
+        max: 4,
+        hold: 30
+    },
+    animate: true
+});
+
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
     draggle.draw();
+    emby.draw();
     console.log('animating a battle sequence');
 }
+
+animateBattle();
 
 let lastKey = '';
 window.addEventListener('keydown', (e) => {
