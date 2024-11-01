@@ -1,5 +1,7 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+console.log(gsap);
+
 
 
 canvas.width = 1024;
@@ -174,6 +176,22 @@ function animate() {
         ) {
                 console.log('activate battle');
                 battle.initiated = true;
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 5,
+                    yoyo: true,
+                    duration: 0.5,
+                    onComplete () {
+                        gsap.to('#overlappingDiv', {
+                            opacity: 1,
+                            duration: 0.4
+
+                        });
+                        // Activate a new animation loop
+
+                        // Deactivate current animation loop
+                    }
+                })
                 break
             }
         }
