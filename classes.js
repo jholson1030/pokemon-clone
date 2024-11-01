@@ -1,5 +1,5 @@
 class Sprite {
-    constructor({position, image, frames = {max: 1}, sprites }) {
+    constructor({position, image, frames = {max: 1}, sprites, animate = false }) {
         this.position = position;
         this.image = image;
         this.frames = {...frames, val: 0, elapsed: 0};
@@ -10,7 +10,7 @@ class Sprite {
             console.log(this.width);
             console.log(this.height);
         }
-        this.moving = false;
+        this.animate = animate;
         this.sprites = sprites;
         
 
@@ -28,7 +28,7 @@ class Sprite {
             this.image.width / this.frames.max,
             this.image.height
         );
-        if (!this.moving) return
+        if (!this.animate) return
 
         if (this.frames.max > 1) {
             this.frames.elapsed++;
