@@ -351,14 +351,12 @@ function animateBattle() {
 
 animateBattle();
 
+// Event listeners for attacks 
 document.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (e) => {
+        console.log(e.currentTarget.innerHTML);
         playerCharacter.attack({
-            attack: {
-                name: "Tackle",
-                damage: 10,
-                type: "Normal"
-            },
+            attack: ,
             recipient: draggle
         })
     });
