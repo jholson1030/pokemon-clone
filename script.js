@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-console.log(gsap);
+
 
 
 
@@ -143,7 +143,6 @@ const battle = {
 
 function animate() {
     const anamationID = window.requestAnimationFrame(animate);
-    console.log(anamationID);
     background.draw();
     boundaries.forEach(Boundary => {
         Boundary.draw();
@@ -155,7 +154,6 @@ function animate() {
     player.draw();
     foreground.draw();
 
-    console.log(anamationID);
     let moving = true;
     player.animate = false;
 
@@ -178,7 +176,7 @@ function animate() {
             && Math.random() < 0.01
 
         ) {
-                console.log('activate battle');
+               
 
                 // Deactivate current animation loop
                 window.cancelAnimationFrame(anamationID);
@@ -335,7 +333,7 @@ const emby = new Sprite({
         x: 275,
         y: 330
     },
-    image: embyImage,
+    image: player.sprites.up,
     frames: {
         max: 4,
         hold: 30
@@ -348,10 +346,22 @@ function animateBattle() {
     battleBackground.draw();
     draggle.draw();
     emby.draw();
-    console.log('animating a battle sequence');
 }
 
 animateBattle();
+
+document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', () => {
+        emby.attack({
+            attack: {
+                name: "Tackle",
+                damage: 10,
+                type: "Normal"
+            },
+            recipient: draggle
+        })
+    });
+});
 
 let lastKey = '';
 window.addEventListener('keydown', (e) => {
