@@ -329,7 +329,7 @@ const draggle= new Sprite({
 
 const embyImage = new Image();
 embyImage.src = './img/embySprite.png';
-const emby = new Sprite({
+const playerCharacter = new Sprite({
     position: {
         x: 275,
         y: 330
@@ -346,14 +346,14 @@ function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
     draggle.draw();
-    emby.draw();
+    playerCharacter.draw();
 }
 
 animateBattle();
 
 document.querySelectorAll('button').forEach((button) => {
     button.addEventListener('click', () => {
-        emby.attack({
+        playerCharacter.attack({
             attack: {
                 name: "Tackle",
                 damage: 10,
