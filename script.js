@@ -342,11 +342,16 @@ const playerCharacter = new Sprite({
     animate: true
 });
 
+const renderedSprites = [];
+
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
     draggle.draw();
     playerCharacter.draw();
+    renderedSprites.forEach(sprite => {
+        sprite.draw();
+    })
 }
 
 animateBattle();
@@ -354,11 +359,12 @@ animateBattle();
 // Event listeners for attacks 
 document.querySelectorAll('button').forEach((button) => {
     button.addEventListener('click', (e) => {
-        console.log(e.currentTarget.innerHTML);
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
         playerCharacter.attack({
-            attack: ,
-            recipient: draggle
-        })
+            attack: selectedAttack,
+            recipient: draggle,
+            renderedSprites
+        }) 
     });
 });
 
