@@ -342,13 +342,12 @@ const playerCharacter = new Sprite({
     animate: true
 });
 
-const renderedSprites = [];
+const renderedSprites = [draggle, playerCharacter];
 
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
-    draggle.draw();
-    playerCharacter.draw();
+
     renderedSprites.forEach(sprite => {
         sprite.draw();
     })
