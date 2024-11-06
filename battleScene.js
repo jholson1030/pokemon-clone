@@ -56,6 +56,8 @@ function animateBattle() {
 
 animateBattle();
 
+const queue = [];
+
 // Event listeners for attacks 
 document.querySelectorAll('button').forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -64,15 +66,30 @@ document.querySelectorAll('button').forEach((button) => {
             attack: selectedAttack,
             recipient: draggle,
             renderedSprites
-        }) 
+        });
+        queue.push(() => {
+            draggle.attack({
+                attack: attacks.Tackle,
+                recipient: playerCharacter,
+                renderedSprites
+            }); 
+        });
+
+        queue.push(() => {
+            draggle.attack({
+                attack: attacks.Fireball,
+                recipient: playerCharacter,
+                renderedSprites
+            }); 
+        });
     });
 });
 
-const dialougeBox = document.querySelector('#dialougeBox');
-if (dialougeBox) {
-    dialougeBox.addEventListener('click', () => {
-        console.log('clicked dialouge');
-    });
-} else {
-    console.log('dialouge not found');
-}
+document.querySelector('#dialogueBox').addEventListener('click', (e) => {
+    if (queue.length > 0) {
+        queue[0]();
+        queue.shift();
+    } else {
+    e.currentTarget.style.display = 'none';
+
+}});

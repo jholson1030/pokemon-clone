@@ -53,8 +53,8 @@ class Sprite {
         }    
     }
     attack({attack, recipient, renderedSprites}) {
-        document.querySelector('#dialougeBox').style.display = 'block';
-        document.querySelector('#dialougeBox').innerHTML = this.spriteName + ' used ' + attack.name;
+        document.querySelector('#dialogueBox').style.display = 'block';
+        document.querySelector('#dialogueBox').innerHTML = this.spriteName + ' used ' + attack.name;
 
         let healthBar = '#enemyHealthBar';
         if (this.isEnemy) healthBar = '#playerHealthBar';
