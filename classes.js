@@ -1,5 +1,5 @@
 class Sprite {
-    constructor({position, image, frames = {max: 1, hold: 10}, sprites, animate = false, isEnemy = false, rotation = 0}) {
+    constructor({position, image, frames = {max: 1, hold: 10}, sprites, animate = false, isEnemy = false, rotation = 0, spriteName}) {
         this.position = position;
         this.image = image;
         this.frames = {...frames, val: 0, elapsed: 0};
@@ -16,6 +16,7 @@ class Sprite {
         this.health = 100
         this.isEnemy = isEnemy;
         this.rotation = rotation;
+        this.spriteName = spriteName; // Fix this later
     }
 
     draw() {
@@ -33,7 +34,8 @@ class Sprite {
             this.position.x,
             this.position.y,
             this.image.width / this.frames.max,
-            this.image.height
+            this.image.height,
+            
         );
         c.restore();
         if (!this.animate) return
@@ -51,6 +53,9 @@ class Sprite {
         }    
     }
     attack({attack, recipient, renderedSprites}) {
+        document.querySelector('#dialougeBox').style.display = 'block';
+        document.querySelector('#dialougeBox').innerHTML = this.spriteName + ' used ' + attack.name;
+
         let healthBar = '#enemyHealthBar';
         if (this.isEnemy) healthBar = '#playerHealthBar';
 

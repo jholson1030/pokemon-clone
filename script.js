@@ -324,7 +324,8 @@ const draggle= new Sprite({
         hold: 30
     },
     animate: true,
-    isEnemy: true
+    isEnemy: true,
+    spriteName: 'Draggle'
 });
 
 const embyImage = new Image();
@@ -339,7 +340,9 @@ const playerCharacter = new Sprite({
         max: 4,
         hold: 30
     },
-    animate: true
+    animate: true,
+    spriteName: 'PlayerCharacter'
+
 });
 
 const renderedSprites = [draggle, playerCharacter];
